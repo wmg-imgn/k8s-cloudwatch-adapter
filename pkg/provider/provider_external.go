@@ -1,6 +1,8 @@
 package provider
 
 import (
+	"fmt"
+
 	"github.com/kubernetes-incubator/custom-metrics-apiserver/pkg/provider"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
@@ -35,9 +37,13 @@ func (p *cloudwatchProvider) GetExternalMetric(namespace string, metricSelector 
 	var quantity resource.Quantity
 	if len(metricValue) == 0 || len(metricValue[0].Values) == 0 {
 		quantity = *resource.NewMilliQuantity(0, resource.DecimalSI)
+		fmt.Println("After conversion when zero", quantity.String())
 	} else {
 		quantity = *resource.NewQuantity(int64(metricValue[0].Values[0]), resource.DecimalSI)
+		fmt.Println("Before conversion", metricValue[0].Values[0])
+		fmt.Println("After conversion", int64(metricValue[0].Values[0]))
 	}
+
 	externalMetricValue := external_metrics.ExternalMetricValue{
 		MetricName: info.Metric,
 		Value:      quantity,
