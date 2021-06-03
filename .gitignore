@@ -1,3 +1,5 @@
-vendor/
+vendor/**/*
+!vendor/modules.txt
+
 _output/
 adapter
