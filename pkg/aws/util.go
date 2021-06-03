@@ -15,20 +15,8 @@ import (
 
 // GetLocalRegion gets the region ID from the instance metadata.
 func GetLocalRegion() string {
-	cfg, err := config.LoadDefaultConfig(context.TODO())
-	if err != nil {
-		klog.Errorf("error: %v", err)
-		return ""
-	}
-
-	client := imds.NewFromConfig(cfg)
-	region, err := client.GetRegion(context.TODO(), &imds.GetRegionInput{})
-	if err != nil {
-		klog.Errorf("Unable to retrieve the region from the EC2 instance %v\n", err)
-		return ""
-	}
-
-	return region.Region
+	
+	return "us-east-1"
 }
 
 func toCloudWatchQuery(externalMetric *v1alpha1.ExternalMetric) cloudwatch.GetMetricDataInput {
